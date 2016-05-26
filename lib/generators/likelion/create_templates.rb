@@ -18,8 +18,7 @@ class CreateTemplates < Thor::Group
 		add_bootstraps
 		#routes.rb 설정
 		set_routes
-		#view file 생성
-		copy_files
+		
 	end
 
 	def run_commands	
@@ -33,7 +32,8 @@ class CreateTemplates < Thor::Group
 				end
 				#Command 실행
 				run (line)
-
+				#view  생성
+				copy_files
 				#Model과 Controller인 경우 내용(method, attributes 등) 추가
 				add_attributes(line)
 			end
