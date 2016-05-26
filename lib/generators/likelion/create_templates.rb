@@ -42,6 +42,7 @@ class CreateTemplates < Thor::Group
 
 	def add_attributes(line)
 		#TODO : Devise는...?
+		line = line.split
 		if line[2].eql?"controller" 
 			inject_into_class "app/controller/#{line[3]}_controller.rb", \
 				"#{line[3].capitalize}Controller", \
