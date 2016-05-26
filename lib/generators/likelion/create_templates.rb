@@ -24,7 +24,6 @@ class CreateTemplates < Thor::Group
 
 	def run_commands	
 		# IO.readlines("#{path}/command.txt").each do |infile|
-		puts [@@path,'command.txt'].join('/')
 		File.open([@@path,'command.txt'].join('/'),"r") do |infile|
 			#command.txt 내에 있는 커맨드 읽기
 			while( line = infile.gets )
