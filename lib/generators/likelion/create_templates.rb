@@ -1,4 +1,4 @@
-require 'Thor'
+require 'thor'
 class CreateTemplates < Thor::Group
 	include Thor::Actions
 

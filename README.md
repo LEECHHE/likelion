@@ -128,11 +128,12 @@ home.write.html.erb
 
 #### 생성 순서
 create_templates::process에서 실행되며 순서는 아래와 같습니다.
+
 1. views.txt를 한 줄 씩 읽으며 view를 추가합니다.
-1. command.txt를 한 줄 씩 읽으며 model과 controller를 생성합니다.
-2. application_controller.rb 에 protect_from_forgery를 주석 처리합니다.
-3. Bootstrap CDN을 application.html.erb에 추가합니다.
-4. routes.rb를 읽어 routes 설정을 합니다.
+2. command.txt를 한 줄 씩 읽으며 model과 controller를 생성합니다.
+3. application_controller.rb 에 protect_from_forgery를 주석 처리합니다.
+4. Bootstrap CDN을 application.html.erb에 추가합니다.
+5. routes.rb를 읽어 routes 설정을 합니다.
 
 ## Testing
 추가한 코드가 제대로 동작하는지 테스트해볼 수 있습니다. 작성한 파일의 Commit을 완료한 상태에서
