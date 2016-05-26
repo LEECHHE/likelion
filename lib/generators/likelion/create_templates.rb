@@ -44,11 +44,11 @@ class CreateTemplates < Thor::Group
 		#TODO : Devise는...?
 		line = line.split
 		if line[2].eql?"controller" 
-			inject_into_class "app/controller/#{line[3]}_controller.rb", \
+			inject_into_class "app/controllers/#{line[3]}_controller.rb", \
 				"#{line[3].capitalize}Controller", \
 				File.read("#{@@path}/#{line[3]}_controller.rb")
 		elsif line[2].eql?"model"
-			inject_into_class "app/model/#{line[3]}.rb", \
+			inject_into_class "app/models/#{line[3]}.rb", \
 				"#{line[3].capitalize}", \
 				File.read("#{@@path}/#{line[3].capitalize}.rb")
 		end
