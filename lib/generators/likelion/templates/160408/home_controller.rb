@@ -4,4 +4,3 @@
 		@almond = params[:title]
 		@anchovy = params[:content]
 	end
-	

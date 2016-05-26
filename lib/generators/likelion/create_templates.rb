@@ -4,12 +4,15 @@ class CreateTemplates < Thor::Group
 
 	raise ArgumentError, "The date should be input." if ARGV[0] == nil
 	@@path = "#{File.dirname(__FILE__)}/templates/#{ARGV[0]}"
+	
 	def self.source_root
     	File.dirname(__FILE__)
   	end
 	
 	def process
 		source_paths << @@path
+		#view  생성
+		copy_files
 		#모델, 컨트롤러 등 생성
 		run_commands
 		#application_controller.rb 주석 처리
@@ -22,17 +25,14 @@ class CreateTemplates < Thor::Group
 	end
 
 	def run_commands	
-		# IO.readlines("#{path}/command.txt").each do |infile|
-		#view  생성
-		copy_files
-		File.open([@@path,'command.txt'].join('/'),"r") do |infile|
+		File.open("#{@@path}/command.txt","r") do |infile|
 			#command.txt 내에 있는 커맨드 읽기
 			while( line = infile.gets )
 				#주석은 통과
 				if line[0] == '#'
 					next
 				end
-				#Command 실행
+				#Command 실행. Thor::Actions::run(cmd)
 				run (line)
 				#Model과 Controller인 경우 내용(method, attributes 등) 추가
 				add_attributes(line)
@@ -42,8 +42,9 @@ class CreateTemplates < Thor::Group
 
 	def add_attributes(line)
 		#TODO : Devise는...?
+		# Thor::Actions::inject_into_class
 		line = line.split
-		if line[2].eql?"controller" 
+		if line[2].eql?"controller"
 			inject_into_class "app/controllers/#{line[3]}_controller.rb", \
 				"#{line[3].capitalize}Controller", \
 				File.read("#{@@path}/#{line[3]}_controller.rb")
@@ -56,11 +57,13 @@ class CreateTemplates < Thor::Group
 
 	def comment_application_controller
 		# appication_controller.rb에 protect_from_forgery 주석 처리
+		# Thor::Actions::comment_lines
 		comment_lines 'app/controllers/application_controller.rb', /protect_from_forgery with: :exception/
 	end
 
 	def add_bootstraps
 		#Bootstrap CDN 추가
+		# Thor::Actions::insert_into_file
 		insert_into_file "app/views/layouts/application.html.erb", bootstrap_cdn, :before => "</head>\n"
 	end
 
@@ -72,15 +75,17 @@ class CreateTemplates < Thor::Group
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
 		<!-- Latest compiled and minified JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>\n'
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>'
 	end
 
 	def set_routes
 		#routes.rb 내용을 복사
+		# Thor::Actions::insert_into_file
 		insert_into_file "config/routes.rb", \
 				File.read("#{@@path}/routes.rb"), \
 				:after => "Rails.application.routes.draw do\n"
 	end
+
 	def copy_files
 		File.open("#{@@path}/views.txt","r") do |infile|
 			while(filename = infile.gets)
