@@ -1,0 +1,2 @@
+## 컨트롤러 생성
+rails g controller home
