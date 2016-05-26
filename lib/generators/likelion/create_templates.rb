@@ -23,6 +23,8 @@ class CreateTemplates < Thor::Group
 
 	def run_commands	
 		# IO.readlines("#{path}/command.txt").each do |infile|
+		#view  생성
+		copy_files
 		File.open([@@path,'command.txt'].join('/'),"r") do |infile|
 			#command.txt 내에 있는 커맨드 읽기
 			while( line = infile.gets )
@@ -32,8 +34,6 @@ class CreateTemplates < Thor::Group
 				end
 				#Command 실행
 				run (line)
-				#view  생성
-				copy_files
 				#Model과 Controller인 경우 내용(method, attributes 등) 추가
 				add_attributes(line)
 			end
