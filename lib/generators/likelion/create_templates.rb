@@ -3,7 +3,7 @@ class CreateTemplates < Thor::Group
 	include Thor::Actions
 
 	raise ArgumentError, "The date should be input." if ARGV[0] == nil
-	@@path = "lib/generators/likelion/templates/#{ARGV[0]}"
+	@@path = "#{File.dirname(__FILE__)}/templates/#{ARGV[0]}"
 	def self.source_root
     	File.dirname(__FILE__)
   	end
