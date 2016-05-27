@@ -1,0 +1,2 @@
+rails g controller home index
+gem install mailgun-ruby
