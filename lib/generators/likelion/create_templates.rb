@@ -13,8 +13,10 @@ class CreateTemplates < Thor::Group
 		source_paths << @@path
 		#모델, 컨트롤러 등 생성
 		run_commands
+
 		#view  생성
 		create_views
+
 		#application_controller.rb 주석 처리
 		comment_application_controller
 		#bootstrap 추가
@@ -52,8 +54,16 @@ class CreateTemplates < Thor::Group
 		elsif line[2].eql?"model"
 			run(copy_file("#{@@path}/#{line[3].capitalize}.rb", \
 				"app/models/#{line[3]}.rb"))
+			#데이터베이스 설정
+			set_database(line[3])
 		end
 	end
+
+	def set_database(model_name)
+		db_file = Dir['db/migrate/*_create_#{model_names.pluralize}.rb'][0]
+		puts db_file
+	end
+
 
 	def comment_application_controller
 		# appication_controller.rb에 protect_from_forgery 주석 처리
