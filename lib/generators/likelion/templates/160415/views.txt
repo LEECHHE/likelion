@@ -1,0 +1,4 @@
+home.index.html.erb
+home.list.html.erb
+home.write.html.erb
+home.update_view.html.erb

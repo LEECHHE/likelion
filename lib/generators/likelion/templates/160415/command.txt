@@ -1,0 +1,2 @@
+rails g controller home index
+rails g model post
