@@ -48,10 +48,10 @@ class CreateTemplates < Thor::Group
 		line = line.split
 		if line[2].eql?"controller"
 			run(copy_file("#{@@path}/#{line[3]}_controller.rb", \
-				"app/controllers/#{line[3]}_controller.rb")
+				"app/controllers/#{line[3]}_controller.rb"))
 		elsif line[2].eql?"model"
 			run(copy_file("#{@@path}/#{line[3].capitalize}.rb"), \
-				"app/models/#{line[3]}.rb")
+				"app/models/#{line[3]}.rb"))
 		end
 	end
 
@@ -92,7 +92,7 @@ class CreateTemplates < Thor::Group
 				filename.rstrip!
 				controller, view = filename.split('.',2)
 				run(copy_file("#{@@path}/#{filename}", \
-					"app/views/#{controller}/#{view}")
+					"app/views/#{controller}/#{view}"))
 			end
 		end
 	end
