@@ -12,7 +12,7 @@ class CreateTemplates < Thor::Group
 	def process
 		source_paths << @@path
 		#view  생성
-		copy_files
+		create_views
 		#모델, 컨트롤러 등 생성
 		run_commands
 		#application_controller.rb 주석 처리
@@ -21,7 +21,6 @@ class CreateTemplates < Thor::Group
 		add_bootstraps
 		#routes.rb 설정
 		set_routes
-		
 	end
 
 	def run_commands	
@@ -40,18 +39,19 @@ class CreateTemplates < Thor::Group
 		end
 	end
 
+	def copy_file(src, dest)
+		"cp -rf #{src} #{dest}"
+	end
 	def add_attributes(line)
 		#TODO : Devise는...?
 		# Thor::Actions::inject_into_class
 		line = line.split
 		if line[2].eql?"controller"
-			inject_into_class "app/controllers/#{line[3]}_controller.rb", \
-				"#{line[3].capitalize}Controller", \
-				File.read("#{@@path}/#{line[3]}_controller.rb")
+			run(copy_file("#{@@path}/#{line[3]}_controller.rb", \
+				"app/controllers/#{line[3]}_controller.rb")
 		elsif line[2].eql?"model"
-			inject_into_class "app/models/#{line[3]}.rb", \
-				"#{line[3].capitalize}", \
-				File.read("#{@@path}/#{line[3].capitalize}.rb")
+			run(copy_file("#{@@path}/#{line[3].capitalize}.rb"), \
+				"app/models/#{line[3]}.rb")
 		end
 	end
 
@@ -86,12 +86,13 @@ class CreateTemplates < Thor::Group
 				:after => "Rails.application.routes.draw do\n"
 	end
 
-	def copy_files
+	def create_views
 		File.open("#{@@path}/views.txt","r") do |infile|
 			while(filename = infile.gets)
 				filename.rstrip!
 				controller, view = filename.split('.',2)
-				template filename, "app/views/#{controller}/#{view}"
+				run(copy_file("#{@@path}/#{filename}", \
+					"app/views/#{controller}/#{view}")
 			end
 		end
 	end
