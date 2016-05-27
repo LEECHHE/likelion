@@ -24,6 +24,8 @@ class CreateTemplates < Thor::Group
 		add_bootstraps
 		#routes.rb 설정
 		set_routes
+		#seed 추가
+		add_seeds
 	end
 
 	def run_commands	
@@ -108,6 +110,11 @@ class CreateTemplates < Thor::Group
 					"app/views/#{controller}/#{view}"))
 			end
 		end
+	end
+
+	def add_seeds
+		#seeds.rb 내용을 복사
+		run(copy_file("#{@@path}/seeds.rb", "config/seeds.rb"))
 	end
 end
 

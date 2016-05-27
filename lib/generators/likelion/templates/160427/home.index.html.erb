@@ -1,0 +1,30 @@
+<h1>hi</h1>
+<div class="container">
+    <form action="/write" method="POST">
+      <div class="form-group">
+        <label for="exampleInputEmail1">제목</label>
+        <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="제목">
+      </div>
+        <label for="exampleInputEmail1">내용</label>
+        <textarea name="content" class="form-control" rows="5" id="commit"></textarea>
+      <button type="submit" class="btn btn-default" style="margin-top:20px">전송</button>
+    </form>
+    
+    <% @posts.each do |p| %>
+        <div class="well">
+            <span style="font-weight:bold;"><%= p.title %></span><br>
+            <%= p.content %> <br><hr>
+            
+            <% p.replies.each do |r| %>
+            <%= r.content %><br>
+            <% end %>
+            
+            <form style="margin-top:40px;" action="/home/reply_write" method="POST">
+                <input type="hidden" value="<%= p.id%>" name="id_of_post">
+                <label for="exampleInputEmail1">내용</label>
+                <textarea name="content" class="form-control" rows="5" id="commit"></textarea>
+              <button type="submit" class="btn btn-default" style="margin-top:20px">전송</button>
+            </form>
+        </div>
+    <% end %>
+</div>

@@ -35,7 +35,7 @@ Gem을 설치한 후 아래와 같이 사용합니다.
     ...
     Description:
     현재 생성 가능한 날짜의 코드는
-    [160408, 160411, 160413, 160415, 160425]
+    [160408, 160411, 160413, 160415, 160425, 160427]
     입니다.
 
 확인할 수 있습니다
@@ -162,7 +162,7 @@ create_templates::process에서 실행되며 순서는 아래와 같습니다.
 
 	$ gem build likelion.gemspec
     
-위 명령어를 입력하면 likelion-[VERSION].gem 이 생성됩니다. 2016년 5월 27일 기준으로 likelion-0.1.1.gem 이 생성됩니다. 새로운 rails application을 만들어 테스트해봅시다.
+위 명령어를 입력하면 likelion-[VERSION].gem 이 생성됩니다. 2016년 5월 27일 기준으로 likelion-0.2.0.gem 이 생성됩니다. 새로운 rails application을 만들어 테스트해봅시다.
 
 	$ cd ..
     $ rails new blog
