@@ -60,6 +60,9 @@ class CreateTemplates < Thor::Group
 	end
 
 	def set_database(model_name)
+		if not File.exist?("#{@@path}/db_#{model_name.pluralize}.rb")
+			return
+		end
 		db_file = Dir['db/migrate/*_create_#{model_names.pluralize}.rb'][0]
 		puts db_file
 	end
