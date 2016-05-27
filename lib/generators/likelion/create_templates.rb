@@ -11,10 +11,10 @@ class CreateTemplates < Thor::Group
 	
 	def process
 		source_paths << @@path
-		#view  생성
-		create_views
 		#모델, 컨트롤러 등 생성
 		run_commands
+		#view  생성
+		create_views
 		#application_controller.rb 주석 처리
 		comment_application_controller
 		#bootstrap 추가
