@@ -29,6 +29,16 @@ Gem을 설치한 후 아래와 같이 사용합니다.
 	$ rails generate likelion:install 160408
 
 와 같이 불러올 수 있습니다.
+생성 가능한 날짜의 목록은
+
+	$ rails generate likelion:install --help
+    ...
+    Description:
+    현재 생성 가능한 날짜의 코드는
+    [160408]
+    입니다.
+
+확인할 수 있습니다
 
 ## Contributing
 이 Gem은 누구든지 추가할 수 있습니다. 내용을 추가하기 위해선 생성하고자 하는 폴더의 상위 폴더에서 아래의 명령어를 실행합니다.
