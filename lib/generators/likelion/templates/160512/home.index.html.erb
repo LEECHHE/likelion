@@ -1,0 +1,12 @@
+<h1>Home#index</h1>
+<p>Find me in app/views/home/index.html.erb</p>
+<form action="/home/upload" method ="post" enctype="multipart/form-data">
+  <input type="file" name="pic" accept="/image/*">
+  <input type="submit">
+</form>
+
+<% if flash[:notice] %>
+<%= flash[:notice] %>
+<% end %>
+
+<%= yield %>

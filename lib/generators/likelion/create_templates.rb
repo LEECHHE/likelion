@@ -14,10 +14,10 @@ class CreateTemplates < Thor::Group
 		source_paths << @@path
 		#모델, 컨트롤러 등 생성
 		run_commands
-
 		#view  생성
 		create_views
-
+		#initializer 파일 추가
+		add_initializer
 		#application_controller.rb 주석 처리
 		comment_application_controller
 		#bootstrap 추가
@@ -26,6 +26,9 @@ class CreateTemplates < Thor::Group
 		set_routes
 		#seed 추가
 		add_seeds
+
+		#완료 후 설명 출력
+		print_description
 	end
 
 	def run_commands	
@@ -115,12 +118,31 @@ class CreateTemplates < Thor::Group
 		end
 	end
 
+	def add_initializer
+		initializers = Dir["#{@@path}/initializer*"].select { |f| f =~ /initializer.*.rb$/ }
+		if initializer.empty?
+			return
+		end
+		initializers.each do |file|
+			file_name = file_name.split('.',2)[1]
+			run(copy_file("#{@@path}/#{file}", "config/initializers/#{file_name}"))
+		end
+	end
 	def add_seeds
 		#seeds.rb 내용을 복사
 		if not File.exist?("#{@@path}/seeds.rb")
 			return
 		end
 		run(copy_file("#{@@path}/seeds.rb", "config/seeds.rb"))
+	end
+
+	def print_description
+		puts "================================"
+		puts "코드가 추가되었습니다."
+		if ARGV[0].eql?"160512"
+			puts "Mini magick은 직접 설치해주시기 바랍니다."
+		end
+		puts "================================"
 	end
 end
 
