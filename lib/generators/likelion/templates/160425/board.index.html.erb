@@ -1,0 +1,32 @@
+<div class="container">
+    <% @post.each do |post| %>
+      <%= post.title %></br>
+      <%= post.content %></br>
+      <%= post.created_at %></br>
+      
+      <% post.comments.each do |c| %>
+        <%= c.id %> <%= c.content %><br>
+
+      <% end %>
+      <form action="/board/<%= post.id %>/comment_create" method="POST">
+        <div class="form-group">
+          <input type="text" name="content" class="form-control" placeholder="제목">
+        </div>
+        <button type="submit" class="btn btn-default">댓글달기</button>
+      </form>
+      <hr>
+    
+    <% end %>
+     <hr><br>
+    <form action="/board/create" method="POST">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="text" name="title" class="form-control" placeholder="제목">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <textarea class="form-control" name="content"></textarea>
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>

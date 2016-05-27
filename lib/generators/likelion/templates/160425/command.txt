@@ -1,0 +1,3 @@
+rails g model post title:string content:text
+rails g model comment content:string post_id:integer
+rails g controller board index create new edit destroy
