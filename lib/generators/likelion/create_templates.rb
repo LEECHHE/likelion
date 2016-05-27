@@ -80,10 +80,7 @@ class CreateTemplates < Thor::Group
 
 	def set_routes
 		#routes.rb 내용을 복사
-		# Thor::Actions::insert_into_file
-		insert_into_file "config/routes.rb", \
-				File.read("#{@@path}/routes.rb"), \
-				:after => "Rails.application.routes.draw do\n"
+		run(copy_file("#{@@path}/routes.rb", "config/routes.rb"))
 	end
 
 	def create_views
