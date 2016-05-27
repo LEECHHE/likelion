@@ -1,0 +1,3 @@
+rails g controller home index
+rails g model post title:string content:text
+rails g model reply content:text post_id:integer

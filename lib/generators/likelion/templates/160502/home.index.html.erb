@@ -1,0 +1,51 @@
+<h1>hi</h1>
+<div class="container">
+    <form action="/write" method="POST">
+      <div class="form-group">
+        <label for="exampleInputEmail1">제목</label>
+        <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="제목">
+      </div>
+        <label for="exampleInputEmail1">내용</label>
+        <textarea name="content" class="form-control" rows="5" id="commit"></textarea>
+      <button type="submit" class="btn btn-default" style="margin-top:20px">전송</button>
+    </form>
+    
+    <% @posts.each do |p| %>
+        <div class="well">
+            <span style="font-weight:bold;"><%= p.title %></span><br>
+            <%= p.content %> <br><hr>
+            <div id ="reply_<%=p.id%>">
+              <% p.replies.each do |r| %>
+              <%= r.content %><br>
+              <% end %>
+            </div>
+            <!--<input type="hidden" value="<#%= p.id%>" name="id_of_post">-->
+            <label for="exampleInputEmail1">내용</label>
+            <textarea name="content" class="form-control" rows="5" id="content_<%=p.id%>"></textarea>
+            <button value="<%= p.id %>"type="submit" class="btn btn-default reply_submit" style="margin-top:20px ">전송</button>
+        </div>
+    <% end %>
+</div>
+
+<script>
+$(function(){
+  $(".reply_submit").click(function(){
+    post_id=this.value;
+    post_content = $("#content_"+post_id).val();
+  
+      $.ajax({
+      method: "POST",
+      url: "/home/reply_write",
+      data: { content: post_content, id_of_post:post_id },
+      success: function(){
+        alert("리플이 작성되었습니다.");
+        $("#reply_"+post_id).append("<p>"+post_content+"</p>")
+        $("#content_"+post_id).val('');
+      },
+      error: function(){
+        alert("리플이 작성되지 않았습니다.");
+      }
+    })
+  });
+});
+</script>
