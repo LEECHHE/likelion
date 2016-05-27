@@ -98,6 +98,9 @@ class CreateTemplates < Thor::Group
 
 	def set_routes
 		#routes.rb 내용을 복사
+		if not File.exist?("#{@@path}/routes.rb")
+			return
+		end
 		run(copy_file("#{@@path}/routes.rb", "config/routes.rb"))
 	end
 
@@ -114,6 +117,9 @@ class CreateTemplates < Thor::Group
 
 	def add_seeds
 		#seeds.rb 내용을 복사
+		if not File.exist?("#{@@path}/seeds.rb")
+			return
+		end
 		run(copy_file("#{@@path}/seeds.rb", "config/seeds.rb"))
 	end
 end
