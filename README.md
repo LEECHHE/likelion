@@ -18,10 +18,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install likelion
-
 ## Usage
 
 Gem을 설치한 후 아래와 같이 사용합니다.

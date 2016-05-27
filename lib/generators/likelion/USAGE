@@ -1,8 +1,8 @@
 Description:
-    Explain the generator
+    현재 생성 가능한 날짜의 코드는
+    [160408]
+    입니다.
 
 Example:
-    rails generate likelion Thing
+    rails generate likelion:install 160408
 
-    This will create:
-        what/will/it/create
