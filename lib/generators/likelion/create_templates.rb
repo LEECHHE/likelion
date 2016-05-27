@@ -1,4 +1,5 @@
 require 'thor'
+require 'rails'
 class CreateTemplates < Thor::Group
 	include Thor::Actions
 
@@ -52,19 +53,21 @@ class CreateTemplates < Thor::Group
 			run(copy_file("#{@@path}/#{line[3]}_controller.rb", \
 				"app/controllers/#{line[3]}_controller.rb"))
 		elsif line[2].eql?"model"
-			run(copy_file("#{@@path}/#{line[3].capitalize}.rb", \
-				"app/models/#{line[3]}.rb"))
+			if File.exist?("#{@@path}/#{line[3]}.rb")
+				run(copy_file("#{@@path}/#{line[3]}.rb", \
+					"app/models/#{line[3]}.rb"))
+			end
 			#데이터베이스 설정
-			set_database(line[3])
+			set_database(line[3].pluralize)
 		end
 	end
 
 	def set_database(model_name)
-		if not File.exist?("#{@@path}/db_#{model_name.pluralize}.rb")
+		if not File.exist?("#{@@path}/create_#{model_name}.rb")
 			return
 		end
-		db_file = Dir['db/migrate/*_create_#{model_names.pluralize}.rb'][0]
-		puts db_file
+		db_file = Dir['db/migrate/*'].select { |f| f =~ /#{model_name}.rb$/ } 
+		run(copy_file("#{@@path}/create_#{model_name}.rb",db_file[0]))
 	end
 
 

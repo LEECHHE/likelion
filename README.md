@@ -35,7 +35,7 @@ Gem을 설치한 후 아래와 같이 사용합니다.
     ...
     Description:
     현재 생성 가능한 날짜의 코드는
-    [160408, 160411]
+    [160408]
     입니다.
 
 확인할 수 있습니다
@@ -61,7 +61,7 @@ Gem의 파일 중 lib에 파일을 추가합니다. 구조는 아래와 같습�
 		          		├── routes.rb
 		          		├── views.txt
 		          		├── [CONTROLLER_NAME].[METHOD].html.erb (ex. home.index.html.erb)
-		          		├── ....
+		          		├── create_[MODEL.pluralize].rb (ex. create_posts.rb)
 
             
 - install_generator.rb
@@ -132,15 +132,30 @@ home.write.html.erb
 </div>
 ```
 
+- create_[MODEL.pluralize].rb : 모델 데이터베이스 Migration 파일입니다.
+
+```ruby
+class CreatePosts < ActiveRecord::Migration
+  def change
+    create_table :posts do |t|
+      t.string "title"
+      t.string "content"
+      t.timestamps null: false
+    end
+  end
+end
+```
+
 #### 생성 순서
 create_templates::process에서 실행되며 순서는 아래와 같습니다.
 
 
 1. command.txt를 한 줄 씩 읽으며 model과 controller를 생성합니다.
-2. views.txt를 한 줄 씩 읽으며 view를 추가합니다.
-3. application_controller.rb 에 protect_from_forgery를 주석 처리합니다.
-4. Bootstrap CDN을 application.html.erb에 추가합니다.
-5. routes.rb를 읽어 routes 설정을 합니다.
+2. 마이그레이션 파일을 추가합니다.
+3. views.txt를 한 줄 씩 읽으며 view를 추가합니다.
+4. application_controller.rb 에 protect_from_forgery를 주석 처리합니다.
+5. Bootstrap CDN을 application.html.erb에 추가합니다.
+6. routes.rb를 읽어 routes 설정을 합니다.
 
 ## Testing
 추가한 코드가 제대로 동작하는지 테스트해볼 수 있습니다. 작성한 파일의 Commit을 완료한 상태에서
