@@ -1,0 +1,3 @@
+home.index.html.erb
+home.list.html.erb
+home.write.html.erb
