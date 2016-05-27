@@ -50,7 +50,7 @@ class CreateTemplates < Thor::Group
 			run(copy_file("#{@@path}/#{line[3]}_controller.rb", \
 				"app/controllers/#{line[3]}_controller.rb"))
 		elsif line[2].eql?"model"
-			run(copy_file("#{@@path}/#{line[3].capitalize}.rb"), \
+			run(copy_file("#{@@path}/#{line[3].capitalize}.rb", \
 				"app/models/#{line[3]}.rb"))
 		end
 	end
