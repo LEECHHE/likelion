@@ -73,20 +73,20 @@ Templates 폴더는 'YYMMDD' 형식으로 된 날짜를 이름으로 갖는 폴�
 rails g controller home
 ```
 
-- [CONTROLLER].rb : Controller에 작성한 내용 중 <b>클래스의 메소드만</b> 작성한 것입니다. 각 라인마다 Tab으로 한 칸씩 띄워야하며 마지막 end 뒤에 Enter를 입력해 새로운 줄로 끝내야 합니다.
-
+- [CONTROLLER].rb : Controller 전체 파일입니다.
 
 ```ruby
+class HomeController < ApplicationController
 	def index
 	end
 	def write
 		@almond = params[:title]
 		@anchovy = params[:content]
 	end
-
+end
 ```
 
-- routes.rb : routes.rb에 추가해야할 내용입니다. Devise는 자동으로 routes가 추가되므로 이 곳에 작성하지 않습니다. 마찬가지로 각 라인은 Tab으로 한 칸 띄우고 새로운 줄로 끝내야 합니다.
+- routes.rb : routes.rb에 추가해야할 내용입니다. Devise는 자동으로 routes가 추가되므로 이 곳에 작성하지 않습니다. 각 라인은 Tab으로 한 칸 띄우고 새로운 줄로 끝내야 합니다.
 
 
 ```ruby
@@ -129,8 +129,9 @@ home.write.html.erb
 #### 생성 순서
 create_templates::process에서 실행되며 순서는 아래와 같습니다.
 
-1. views.txt를 한 줄 씩 읽으며 view를 추가합니다.
-2. command.txt를 한 줄 씩 읽으며 model과 controller를 생성합니다.
+
+1. command.txt를 한 줄 씩 읽으며 model과 controller를 생성합니다.
+2. views.txt를 한 줄 씩 읽으며 view를 추가합니다.
 3. application_controller.rb 에 protect_from_forgery를 주석 처리합니다.
 4. Bootstrap CDN을 application.html.erb에 추가합니다.
 5. routes.rb를 읽어 routes 설정을 합니다.
