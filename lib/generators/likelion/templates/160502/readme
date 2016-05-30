@@ -1,0 +1,2 @@
+코드가 추가되었습니다. rake db:migrate를 실행해주세요.
+시드가 있습니다. rake db:seed를 실행해주세요.

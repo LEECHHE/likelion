@@ -5,13 +5,24 @@ class CreateTemplates < Thor::Group
 
 	raise ArgumentError, "The date should be input." if ARGV[0] == nil
 	@@path = "#{File.dirname(__FILE__)}/templates/#{ARGV[0]}"
-	
+	#for aliasing
+  	@@converter = { "검색" => "160525", "ajax" => "160502" }
+
+	def convert_keyword
+		unless has_key?(file_name.downcase):
+			return
+		end
+		file_name = @@convert[file_name]
+	end
+
 	def self.source_root
     	File.dirname(__FILE__)
   	end
 	
 	def process
 		source_paths << @@path
+		#키워드를 날짜로 변환
+		convert_keyword
 		#모델, 컨트롤러 등 생성
 		run_commands
 		#view  생성
@@ -52,7 +63,6 @@ class CreateTemplates < Thor::Group
 	end
 	def add_attributes(line)
 		#TODO : Devise는...?
-		# Thor::Actions::inject_into_class
 		line = line.split
 		if line[2].eql?"controller"
 			run(copy_file("#{@@path}/#{line[3]}_controller.rb", \
@@ -101,13 +111,16 @@ class CreateTemplates < Thor::Group
 
 	def set_routes
 		#routes.rb 내용을 복사
-		if not File.exist?("#{@@path}/routes.rb")
+		unless File.exist?("#{@@path}/routes.rb")
 			return
 		end
 		run(copy_file("#{@@path}/routes.rb", "config/routes.rb"))
 	end
 
 	def create_views
+		unless File.exist?("#{@@path}/views.txt")
+			return
+		end
 		File.open("#{@@path}/views.txt","r") do |infile|
 			while(filename = infile.gets)
 				filename.rstrip!
@@ -130,17 +143,17 @@ class CreateTemplates < Thor::Group
 	end
 	def add_seeds
 		#seeds.rb 내용을 복사
-		if not File.exist?("#{@@path}/seeds.rb")
+		unless File.exist?("#{@@path}/seeds.rb")
 			return
 		end
 		run(copy_file("#{@@path}/seeds.rb", "config/seeds.rb"))
 	end
 
+	#설명 출력하기
 	def print_description
 		puts "================================"
-		puts "코드가 추가되었습니다. rake db:migrate를 실행해주세요."
-		if ARGV[0].eql?"160512"
-			puts "Mini magick은 직접 설치해주시기 바랍니다."
+		if File.exist?("#{@@path}/readme")
+			puts File.read("#{@@path}/readme")
 		end
 		puts "================================"
 	end

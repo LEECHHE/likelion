@@ -1,0 +1,2 @@
+rails g controller home
+rails g model student

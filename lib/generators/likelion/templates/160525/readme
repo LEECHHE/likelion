@@ -1,0 +1,3 @@
+코드가 추가되었습니다. rake db:migrate를 실행해주세요.
+시드가 있습니다. rake db:seed를 실행해주세요.
+이번 강의는 Rails ActiveRecord에 관한 내용으로 설명과 함께 살펴보시기 바랍니다.
