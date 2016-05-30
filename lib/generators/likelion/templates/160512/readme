@@ -1,2 +1,3 @@
 코드가 추가되었습니다. rake db:migrate를 실행해주세요.
+config/initializer/aws.rb 에서 설정을 마쳐주세요. 키 관리에 주의하시기 바랍니다.
 Mini magick은 직접 설치해주시기 바랍니다.

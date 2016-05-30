@@ -6,7 +6,7 @@ class CreateTemplates < Thor::Group
 	raise ArgumentError, "The date should be input." if ARGV[0] == nil
 	@@path = ""
 	#for aliasing
-  	@@converter = { "검색" => "160525", "ajax" => "160502" }
+  	@@converter = { "검색" => "160525", "ajax" => "160502", "이미지업로드" => "160512" }
 
 	def set_path
 		keyword = ARGV[0]
