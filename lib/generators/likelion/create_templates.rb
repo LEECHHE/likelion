@@ -4,15 +4,16 @@ class CreateTemplates < Thor::Group
 	include Thor::Actions
 
 	raise ArgumentError, "The date should be input." if ARGV[0] == nil
-	@@path = "#{File.dirname(__FILE__)}/templates/#{ARGV[0]}"
+	@@path = ""
 	#for aliasing
   	@@converter = { "검색" => "160525", "ajax" => "160502" }
 
-	def convert_keyword
-		unless has_key?(file_name.downcase):
-			return
+	def set_path
+		keyword = ARGV[0]
+		if @@converter.has_key?(keyword.rstrip.downcase)
+			keyword = @@converter[keyword]
 		end
-		file_name = @@convert[file_name]
+		@@path = "#{File.dirname(__FILE__)}/templates/#{keyword}"
 	end
 
 	def self.source_root
@@ -22,7 +23,7 @@ class CreateTemplates < Thor::Group
 	def process
 		source_paths << @@path
 		#키워드를 날짜로 변환
-		convert_keyword
+		set_path
 		#모델, 컨트롤러 등 생성
 		run_commands
 		#view  생성
